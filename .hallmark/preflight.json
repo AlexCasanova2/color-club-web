@@ -1,0 +1,8 @@
+{
+  "date": "2026-07-28",
+  "framework": "Next.js App Router (new project)",
+  "fontStack": "Bricolage Grotesque display + Geist body",
+  "palette": "Color Club locked brand tokens from VISUAL_STYLE_GUIDE.md",
+  "motion": "CSS-only, restrained",
+  "spacing": "4pt scale"
+}
