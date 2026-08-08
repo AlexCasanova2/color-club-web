@@ -3,14 +3,12 @@ import { buildLlmsText } from "@/app/llms.txt/route";
 import robots from "@/app/robots";
 import { buildSitemap } from "@/app/sitemap";
 import { fallbackPageContent } from "@/lib/cms";
-import { isLegalRoute, pageMetadata, publicRoutes, siteConfig } from "@/lib/site";
+import { pageMetadata, publicRoutes } from "@/lib/site";
 
 describe("SEO routes", () => {
   it("includes every indexable public route in the sitemap", () => {
     const entries = buildSitemap(Object.values(fallbackPageContent));
-    const expectedRoutes = publicRoutes.filter(
-      (route) => siteConfig.legalApproved || !isLegalRoute(route),
-    );
+    const expectedRoutes = publicRoutes;
     expect(entries).toHaveLength(expectedRoutes.length);
     for (const route of expectedRoutes) {
       expect(entries.some((entry) => new URL(entry.url).pathname === route)).toBe(true);

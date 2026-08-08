@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { faqItems, gameSteps } from "@/lib/content";
 import { fallbackPageContent } from "@/lib/cms";
-import { legalDocuments, legalPlaceholders } from "@/lib/legal";
+import { legalDetails, legalDocuments } from "@/lib/legal";
 import { legalRoutes } from "@/lib/site";
 
 describe("verified public content", () => {
@@ -18,18 +18,24 @@ describe("verified public content", () => {
     );
   });
 
-  it("provides every required legal draft and CMS fallback", () => {
+  it("provides every required legal document and CMS fallback", () => {
     for (const route of legalRoutes) {
       expect(fallbackPageContent[route]).toBeDefined();
       expect(legalDocuments[route as keyof typeof legalDocuments]).toBeDefined();
     }
   });
 
-  it("keeps legal identity placeholders explicit until approval", () => {
-    expect(legalPlaceholders.owner).toContain("[");
-    expect(legalPlaceholders.taxId).toContain("[");
+  it("uses the approved legal identity and minimum age", () => {
+    expect(legalDetails.owner).toBe("Alex Casanova");
+    expect(legalDetails.taxId).toBe("25369405Z");
     expect(legalDocuments["/terminos"].sections.some((section) =>
       section.paragraphs?.some((paragraph) => paragraph.includes("16 años")),
     )).toBe(true);
+  });
+
+  it("contains no bracketed placeholders or draft notices in legal content", () => {
+    const legalText = JSON.stringify(legalDocuments);
+    expect(legalText).not.toMatch(/\[[A-ZÁÉÍÓÚÜÑ][^\]]*\]/);
+    expect(legalText).not.toMatch(/borrador|pendiente de revisión|no publicar/i);
   });
 });

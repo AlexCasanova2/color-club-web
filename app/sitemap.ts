@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllPageContent, type SitePageContent } from "@/lib/cms";
-import { absoluteUrl, isLegalRoute, siteConfig, type PublicRoute } from "@/lib/site";
+import { absoluteUrl, type PublicRoute } from "@/lib/site";
 
 const routeSeo: Record<
   PublicRoute,
@@ -22,9 +22,7 @@ export function buildSitemap(
   pages: Pick<SitePageContent, "route" | "updated_at">[],
   now = new Date(),
 ): MetadataRoute.Sitemap {
-  return pages
-    .filter((page) => siteConfig.legalApproved || !isLegalRoute(page.route))
-    .map((page) => ({
+  return pages.map((page) => ({
       url: absoluteUrl(page.route),
       lastModified: page.updated_at ? new Date(page.updated_at) : now,
       ...routeSeo[page.route],

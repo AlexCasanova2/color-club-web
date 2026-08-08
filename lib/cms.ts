@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { createSupabasePublicClient } from "./supabase/public";
 import type { createSupabaseServerClient } from "./supabase/server";
-import { publicRoutes, routeDescriptions, routeLabels, type PublicRoute } from "./site";
+import { isLegalRoute, publicRoutes, routeDescriptions, routeLabels, type PublicRoute } from "./site";
 
 export type SitePageContent = {
   route: PublicRoute;
@@ -48,7 +48,7 @@ export const fallbackPageContent: Record<PublicRoute, SitePageContent> = {
     seo_description: routeDescriptions["/privacidad"],
     hero_kicker: "Privacidad",
     hero_title: "Política de privacidad.",
-    hero_body: "Documento pendiente de revisión y aprobación legal.",
+    hero_body: "Cómo tratamos tus datos, quién puede ver el contenido y qué control tienes sobre tu cuenta.",
     published: true,
   },
   "/terminos": {
@@ -57,7 +57,7 @@ export const fallbackPageContent: Record<PublicRoute, SitePageContent> = {
     seo_description: routeDescriptions["/terminos"],
     hero_kicker: "Términos",
     hero_title: "Reglas de uso.",
-    hero_body: "Documento pendiente de revisión y aprobación legal.",
+    hero_body: "Las condiciones para participar en clubs privados, compartir contenido y utilizar Color Club con respeto.",
     published: true,
   },
   "/aviso-legal": {
@@ -112,6 +112,8 @@ export function isPublicRoute(value: string): value is PublicRoute {
 }
 
 export const getPageContent = cache(async (route: PublicRoute): Promise<SitePageContent | null> => {
+  if (isLegalRoute(route)) return fallbackPageContent[route];
+
   const supabase = createSupabasePublicClient();
   if (!supabase) return fallbackPageContent[route];
 
@@ -123,7 +125,7 @@ export const getPageContent = cache(async (route: PublicRoute): Promise<SitePage
     .maybeSingle<SitePageContent>();
 
   if (error) return fallbackPageContent[route];
-  return data;
+  return data ?? fallbackPageContent[route];
 });
 
 export async function getAllPageContent(): Promise<SitePageContent[]> {
@@ -136,7 +138,12 @@ export async function getAllPageContent(): Promise<SitePageContent[]> {
     .order("route");
 
   if (error) return Object.values(fallbackPageContent);
-  return (data as SitePageContent[] | null) ?? [];
+  const pages = (data as SitePageContent[] | null) ?? [];
+  const byRoute = new Map(pages.map((page) => [page.route, page]));
+  for (const route of publicRoutes) {
+    if (isLegalRoute(route)) byRoute.set(route, fallbackPageContent[route]);
+  }
+  return [...byRoute.values()];
 }
 
 export async function getAllPageContentForAdmin(

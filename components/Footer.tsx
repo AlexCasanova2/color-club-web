@@ -9,7 +9,7 @@ const footerLinks = [
   ["Términos", "/terminos"],
   ["Aviso legal", "/aviso-legal"],
   ["Cookies", "/cookies"],
-  ["Comunidad", "/normas-comunidad"],
+  ["Normas de la comunidad", "/normas-comunidad"],
   ["Contenido y fotos", "/contenido-y-fotos"],
   ["Eliminar cuenta", "/eliminar-cuenta"],
 ] as const;

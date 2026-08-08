@@ -25,17 +25,12 @@ La aplicación queda disponible en `http://localhost:3000`.
 | `NEXT_PUBLIC_APP_STORE_URL` | Enlace oficial de App Store |
 | `NEXT_PUBLIC_PLAY_STORE_URL` | Enlace oficial de Google Play |
 | `NEXT_PUBLIC_WAITLIST_URL` | Alternativa cuando no hay tiendas disponibles |
-| `NEXT_PUBLIC_SUPPORT_URL` | Canal oficial de soporte y privacidad |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Token público de Google Search Console |
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Token público de Bing Webmaster Tools |
 | `NEXT_PUBLIC_SUPABASE_URL` | URL del proyecto Supabase para CMS y admin |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Clave anónima pública protegida por RLS |
-| `NEXT_PUBLIC_LEGAL_STATUS` | `approved` únicamente tras revisión legal |
-| `NEXT_PUBLIC_LEGAL_EFFECTIVE_DATE` | Fecha aprobada de entrada en vigor |
 
-Si no hay tiendas ni lista de espera, la web muestra “Próximamente” sin crear botones falsos. Si no hay soporte configurado, muestra un aviso explícito sin inventar direcciones.
-
-Mientras `NEXT_PUBLIC_LEGAL_STATUS` no sea `approved`, Privacidad y Términos se sirven como borradores marcados y con `noindex`.
+Si no hay tiendas ni lista de espera, la web muestra “Próximamente” sin crear botones falsos. El canal público de soporte es `info@getcolorclub.com`.
 
 ## Rutas
 
@@ -89,9 +84,7 @@ Todo el contenido esencial se renderiza en servidor. Los únicos visuales de pro
 
 1. Configura las variables del entorno de producción.
 2. Ejecuta `npm ci`, `npm run typecheck`, `npm test` y `npm run build`.
-3. Verifica las URLs canónicas, tiendas, soporte y estado legal en el despliegue final.
-4. No habilites `NEXT_PUBLIC_LEGAL_STATUS=approved` sin texto y aprobación reales.
-
+3. Verifica las URLs canónicas, tiendas, soporte y páginas legales en el despliegue final.
 La web no incluye analítica ni cookies no esenciales por defecto.
 
 ## Admin de páginas y SEO
@@ -124,16 +117,6 @@ values ('00000000-0000-0000-0000-000000000000', 'owner', 'active', null);
 
 No hardcodees emails ni UUIDs en el repositorio. Después de crear el primer `owner`, entra por `/internal-admin/login` con ese usuario.
 
-## Revisión legal pendiente
+## Contenido legal
 
-El paquete legal está redactado como borrador para España y la Unión Europea, con edad mínima contractual prevista de 16 años. Incluye placeholders visibles para responsable, NIF/CIF, domicilio, registro, proveedores y canales de contacto.
-
-Antes de producción:
-
-1. Aplica `../color-club/supabase/migrations/202608050001_legal_policy_pages.sql`.
-2. Completa todos los textos entre corchetes en `lib/legal.ts`.
-3. Confirma proveedores, regiones, transferencias y plazos de conservación.
-4. Obtén revisión jurídica profesional y aprobación del responsable del producto.
-5. Configura `NEXT_PUBLIC_LEGAL_EFFECTIVE_DATE` y solo entonces establece `NEXT_PUBLIC_LEGAL_STATUS=approved`.
-
-Mientras el estado no sea `approved`, todas las páginas legales muestran una advertencia, usan `noindex` y quedan fuera de sitemap y `llms.txt`.
+Las políticas públicas se mantienen en `lib/legal.ts` para que su identidad, fechas y cuerpo no dependan del CMS editorial. Los textos reflejan el funcionamiento comunicado del producto y deben revisarse profesionalmente cuando cambien los proveedores, la infraestructura, los plazos internos o las funciones de la app.

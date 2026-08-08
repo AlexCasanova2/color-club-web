@@ -1163,6 +1163,58 @@ p {
   padding-block: var(--space-3xl) var(--space-4xl);
 }
 
+.support-channels {
+  display: grid;
+  gap: var(--space-xl);
+  padding-block: var(--space-3xl) 0;
+}
+
+.support-channels > header {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.support-channels > header h2 {
+  max-width: 18ch;
+}
+
+.support-channels > header > p:last-child {
+  color: var(--color-muted);
+}
+
+.support-channels__grid {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.support-channels__grid article {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  border-radius: var(--radius-xl);
+}
+
+.support-channels__grid article:nth-child(1) { background: var(--color-yellow); }
+.support-channels__grid article:nth-child(2) { background: var(--color-lavender); }
+.support-channels__grid article:nth-child(3) { background: var(--color-green); }
+
+.support-channels__grid article p {
+  flex: 1;
+}
+
+.support-channels__grid article a,
+.support-contact__links a {
+  max-width: 100%;
+  min-height: 2.75rem;
+  align-content: center;
+  overflow-wrap: anywhere;
+  font-weight: 750;
+  text-underline-offset: 0.25em;
+}
+
 .support-layout__intro {
   display: flex;
   align-items: flex-start;
@@ -1219,6 +1271,19 @@ p {
 
 .support-contact {
   background: var(--color-blue);
+}
+
+.support-contact > p:not(.kicker) {
+  color: var(--color-ink-soft);
+}
+
+.support-contact__links {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-block-start: var(--space-sm);
+  border-block-start: 1px solid var(--color-overlay-strong);
 }
 
 /* Legal */
@@ -1552,6 +1617,16 @@ p {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
+  }
+
+  .support-channels__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .support-contact__links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
   }
 
   .site-footer__meta nav {

@@ -45,9 +45,9 @@ export const routeLabels: Record<PublicRoute, string> = {
 export const routeDescriptions: Record<PublicRoute, string> = {
   "/": "Landing oficial de Color Club: retos privados de color, collages, votación y ranking entre amigos.",
   "/como-funciona": "Guía completa de Color Club: clubs privados, colores, collages, envío, votación y ranking de temporada.",
-  "/soporte": "Preguntas frecuentes sobre clubs, retos, collages, votos, cuenta, contraseña y notificaciones de Color Club.",
-  "/privacidad": "Política de privacidad de Color Club y estructura legal pendiente de aprobación cuando corresponda.",
-  "/terminos": "Términos de uso de Color Club y estructura legal pendiente de aprobación cuando corresponda.",
+  "/soporte": "Soporte de Color Club para acceso, clubs, retos, privacidad, seguridad, denuncias y eliminación de cuenta.",
+  "/privacidad": "Política de privacidad de Color Club: datos tratados, finalidades, proveedores, conservación y derechos.",
+  "/terminos": "Términos de uso de Color Club para cuentas, clubs, retos, contenido, moderación y baja.",
   "/aviso-legal": "Información legal e identificación del titular de la web y la app Color Club.",
   "/cookies": "Información sobre cookies técnicas, almacenamiento de sesión y futuras tecnologías opcionales de Color Club.",
   "/normas-comunidad": "Reglas de convivencia, seguridad, contenido permitido y moderación dentro de Color Club.",
@@ -79,22 +79,16 @@ export const routeKeywords: Record<PublicRoute, readonly string[]> = {
   "/eliminar-cuenta": ["eliminar cuenta Color Club", "borrar datos Color Club"],
 };
 
-const legalEffectiveDate = process.env.NEXT_PUBLIC_LEGAL_EFFECTIVE_DATE || "";
-
 export const siteConfig = {
   name: "Color Club",
   description:
     "Retos privados de color para fotografiar, crear collages y jugar con amigos.",
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://getcolorclub.com",
   appStoreUrl: process.env.NEXT_PUBLIC_APP_STORE_URL || "",
   playStoreUrl: process.env.NEXT_PUBLIC_PLAY_STORE_URL || "",
   waitlistUrl: process.env.NEXT_PUBLIC_WAITLIST_URL || "",
-  supportUrl: process.env.NEXT_PUBLIC_SUPPORT_URL || "",
   googleSiteVerification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "",
   bingSiteVerification: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || "",
-  legalApproved:
-    process.env.NEXT_PUBLIC_LEGAL_STATUS === "approved" && Boolean(legalEffectiveDate),
-  legalEffectiveDate,
 } as const;
 
 export function absoluteUrl(path = "/") {

@@ -1,8 +1,20 @@
 import { JsonLd } from "./JsonLd";
 import { PageHero } from "./PageHero";
 import type { SitePageContent } from "@/lib/cms";
-import { legalReferences, type LegalDocument } from "@/lib/legal";
-import { breadcrumbJsonLd, siteConfig, webPageJsonLd } from "@/lib/site";
+import { legalDetails, legalReferences, type LegalDocument } from "@/lib/legal";
+import { breadcrumbJsonLd, webPageJsonLd } from "@/lib/site";
+
+function renderLegalText(text: string) {
+  return text.split(/(info@getcolorclub\.com|aepd\.es|getcolorclub\.com)/g).map((part, index) => {
+    if (part === legalDetails.email) {
+      return <a href={`mailto:${part}`} key={`${part}-${index}`}>{part}</a>;
+    }
+    if (part === "aepd.es" || part === "getcolorclub.com") {
+      return <a href={`https://${part}`} key={`${part}-${index}`}>{part}</a>;
+    }
+    return part;
+  });
+}
 
 export function LegalDocumentPage({
   content,
@@ -33,12 +45,10 @@ export function LegalDocumentPage({
       <div className="legal-layout shell">
         <aside className="legal-index">
           <div className="legal-status">
-            <strong>{siteConfig.legalApproved ? "Documento aprobado" : "Borrador pendiente"}</strong>
+            <strong>Información del documento</strong>
             <span>España y Unión Europea</span>
-            <span>Edad mínima prevista: 16 años</span>
-            <span>
-              Entrada en vigor: {siteConfig.legalEffectiveDate || "[FECHA PENDIENTE]"}
-            </span>
+            <span>Entrada en vigor: {legalDetails.effectiveDate}</span>
+            <span>Última actualización: {legalDetails.effectiveDate}</span>
           </div>
           <nav aria-label={`Índice de ${document.label}`}>
             {document.sections.map((section) => (
@@ -48,31 +58,21 @@ export function LegalDocumentPage({
         </aside>
 
         <article className="legal-document">
-          {!siteConfig.legalApproved ? (
-            <div className="legal-draft-warning">
-              <strong>No publicar como texto legal definitivo.</strong>
-              <p>
-                Este borrador contiene placeholders entre corchetes y decisiones pendientes.
-                Debe revisarlo una persona profesional antes de cambiar el estado a aprobado.
-              </p>
-            </div>
-          ) : null}
-
           <p className="legal-document__summary">{document.summary}</p>
 
           {document.sections.map((section) => (
             <section id={section.id} key={section.id}>
               <h2>{section.title}</h2>
-              {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              {section.paragraphs?.map((paragraph) => <p key={paragraph}>{renderLegalText(paragraph)}</p>)}
               {section.bullets ? (
-                <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
+                <ul>{section.bullets.map((bullet) => <li key={bullet}>{renderLegalText(bullet)}</li>)}</ul>
               ) : null}
             </section>
           ))}
 
           <section id="referencias" className="legal-references">
             <h2>Normativa y recursos de referencia</h2>
-            <p>Estas fuentes orientan el borrador; no sustituyen la revisión jurídica del caso concreto.</p>
+            <p>Fuentes oficiales relacionadas con la protección de datos y los servicios digitales.</p>
             <ul>
               {legalReferences.map((reference) => (
                 <li key={reference.href}>

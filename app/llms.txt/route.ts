@@ -1,19 +1,16 @@
 import { getAllPageContent } from "@/lib/cms";
-import { isLegalRoute, routeDescriptions, siteConfig } from "@/lib/site";
+import { routeDescriptions, siteConfig } from "@/lib/site";
 
 export const revalidate = 300;
 
 export function buildLlmsText(pages: Awaited<ReturnType<typeof getAllPageContent>>) {
-  const indexablePages = pages.filter(
-    (page) => siteConfig.legalApproved || !isLegalRoute(page.route),
-  );
   const lines = [
     `# ${siteConfig.name}`,
     "",
     siteConfig.description,
     "",
     "## Public pages",
-    ...indexablePages.map((page) => {
+    ...pages.map((page) => {
       const url = new URL(page.route, siteConfig.siteUrl).toString();
       return `- ${url}: ${routeDescriptions[page.route]}`;
     }),
