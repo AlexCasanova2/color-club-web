@@ -21,7 +21,6 @@ La aplicación queda disponible en `http://localhost:3000`.
 
 | Variable | Uso |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | URL canónica del entorno |
 | `NEXT_PUBLIC_APP_STORE_URL` | Enlace oficial de App Store |
 | `NEXT_PUBLIC_PLAY_STORE_URL` | Enlace oficial de Google Play |
 | `NEXT_PUBLIC_WAITLIST_URL` | Alternativa cuando no hay tiendas disponibles |
@@ -50,6 +49,7 @@ No existe ninguna ruta jugable. El panel `/internal-admin/*` está separado, pro
 ## SEO
 
 - Metadata única, canonical absoluto y `hreflang` español por ruta.
+- Origen canónico fijo en `https://getcolorclub.com` para evitar metadatos de entornos internos.
 - Open Graph y Twitter con imágenes dinámicas generadas en `/api/og`.
 - JSON-LD `Organization`, `WebSite`, `WebPage`, `SoftwareApplication`, `HowTo`, `FAQPage` y breadcrumbs según el contenido visible.
 - Sitemap limitado a páginas publicadas e indexables, con `lastModified` del CMS.

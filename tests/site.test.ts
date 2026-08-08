@@ -1,7 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const publicEnvKeys = [
-  "NEXT_PUBLIC_SITE_URL",
   "NEXT_PUBLIC_APP_STORE_URL",
   "NEXT_PUBLIC_PLAY_STORE_URL",
   "NEXT_PUBLIC_WAITLIST_URL",

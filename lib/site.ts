@@ -83,7 +83,7 @@ export const siteConfig = {
   name: "Color Club",
   description:
     "Retos privados de color para fotografiar, crear collages y jugar con amigos.",
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://getcolorclub.com",
+  siteUrl: "https://getcolorclub.com",
   appStoreUrl: process.env.NEXT_PUBLIC_APP_STORE_URL || "",
   playStoreUrl: process.env.NEXT_PUBLIC_PLAY_STORE_URL || "",
   waitlistUrl: process.env.NEXT_PUBLIC_WAITLIST_URL || "",
