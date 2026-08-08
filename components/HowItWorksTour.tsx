@@ -1,6 +1,3 @@
-"use client";
-
-import { motion, useReducedMotion } from "motion/react";
 import type { IconType } from "react-icons";
 import {
   IoCameraOutline,
@@ -63,48 +60,28 @@ const stages = [
 }[];
 
 export function HowItWorksTour() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section className="tour shell" aria-label="Recorrido completo por un reto">
       <ol>
         {stages.map((stage, index) => {
           const Icon = stage.icon;
-          const fromLeft = index % 2 === 0;
           return (
-            <motion.li
+            <li
               className={`tour-stage tour-stage--${stage.tone}`}
               id={`paso-${index + 1}`}
               key={stage.title}
-              initial={reduceMotion ? false : { opacity: 0, x: fromLeft ? -34 : 34, y: 18 }}
-              whileInView={reduceMotion ? undefined : { opacity: 1, x: 0, y: 0 }}
-              viewport={{ once: true, amount: 0.32, margin: "-80px" }}
-              transition={{ duration: 0.52, delay: index * 0.04, ease: [0.16, 1, 0.3, 1] }}
             >
-              <motion.div
-                className="tour-stage__number"
-                initial={reduceMotion ? false : { scale: 0.86 }}
-                whileInView={reduceMotion ? undefined : { scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.38, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              >
+              <div className="tour-stage__number">
                 {String(index + 1).padStart(2, "0")}
-              </motion.div>
+              </div>
               <div className="tour-stage__copy">
                 <Icon aria-hidden="true" />
                 <h2>{stage.title}</h2>
                 <p>{stage.text}</p>
                 <strong>{stage.note}</strong>
               </div>
-              <motion.div
-                className="tour-stage__swatch"
-                aria-hidden="true"
-                initial={reduceMotion ? false : { rotate: fromLeft ? -18 : 18, scale: 0.86 }}
-                whileInView={reduceMotion ? undefined : { rotate: 0, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.58, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              />
-            </motion.li>
+              <div className="tour-stage__swatch" aria-hidden="true" />
+            </li>
           );
         })}
       </ol>

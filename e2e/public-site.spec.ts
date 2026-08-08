@@ -43,6 +43,16 @@ test("support FAQ works without client-side JavaScript", async ({ browser }) => 
   await context.close();
 });
 
+test("landing content is visible without client-side JavaScript", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto("/");
+  await expect(page.getByRole("heading", { name: "Del club al ranking." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Privado para el grupo. Imprevisible para todos." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Solo falta salir a encontrarlos." })).toBeVisible();
+  await context.close();
+});
+
 test("pages expose canonical metadata", async ({ page }) => {
   await page.goto("/soporte");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /\/soporte$/);
