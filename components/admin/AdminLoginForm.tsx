@@ -26,7 +26,7 @@ export function AdminLoginForm() {
             setError("No se ha podido iniciar sesión con esas credenciales.");
             return;
           }
-          router.replace("/internal-admin/site-content");
+          router.replace("/internal-admin");
           router.refresh();
         });
       }}

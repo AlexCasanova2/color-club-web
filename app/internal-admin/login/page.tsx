@@ -20,7 +20,7 @@ export default async function AdminLoginPage() {
   }
 
   const { data } = await supabase.auth.getUser();
-  if (data.user) redirect("/internal-admin/site-content");
+  if (data.user) redirect("/internal-admin");
 
   return (
     <section className="admin-centered">

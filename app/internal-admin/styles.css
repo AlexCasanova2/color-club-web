@@ -84,6 +84,21 @@
   margin-inline-start: auto;
 }
 
+.admin-sidebar__logout button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-height: 2.75rem;
+  padding: var(--space-xs) var(--space-sm);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.admin-sidebar__logout button:hover { background: var(--color-ink-soft); }
+
 .admin-centered {
   display: grid;
   min-height: 100svh;

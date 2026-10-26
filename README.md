@@ -117,6 +117,22 @@ values ('00000000-0000-0000-0000-000000000000', 'owner', 'active', null);
 
 No hardcodees emails ni UUIDs en el repositorio. Después de crear el primer `owner`, entra por `/internal-admin/login` con ese usuario.
 
+### Acceso de moderadores
+
+El acceso deriva al `owner` al editor y al `moderator` a `/internal-admin/reports`.
+La sesión se valida en el servidor y el rol se consulta en `platform_admins`;
+los metadatos editables de un usuario no conceden permisos. Las rutas internas
+renuevan sus cookies y responden con `Cache-Control: private, no-store`.
+«Salir» cierra realmente la sesión de este navegador, sin cerrar la app móvil.
+No se concede ningún rol a cuentas reales de forma automática.
+
+Validación de la unidad: `npm run typecheck`, `npm test` (24 pruebas) y
+`npm run build` correctos. Las pruebas cubren guard, renovación de cookies y
+cierre local de sesión; el recorrido con Auth real se valida con la bandeja local.
+
+La unidad de acceso se puede retirar eliminando `lib/admin-access.ts`, `proxy.ts`
+y sus pruebas y revirtiendo el ajuste de navegación. No modifica datos del producto.
+
 ## Contenido legal
 
 Las políticas públicas se mantienen en `lib/legal.ts` para que su identidad, fechas y cuerpo no dependan del CMS editorial. Los textos reflejan el funcionamiento comunicado del producto y deben revisarse profesionalmente cuando cambien los proveedores, la infraestructura, los plazos internos o las funciones de la app.
