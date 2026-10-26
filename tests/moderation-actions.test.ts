@@ -41,7 +41,7 @@ describe("acciones de moderación", () => {
     expect(mocks.rpc).not.toHaveBeenCalled();
   });
   it("explica conflictos sin reintentar ni revelar detalles internos", async () => {
-    mocks.rpc.mockResolvedValue({ error: { code: "40001", message: "secret" } });
+    mocks.rpc.mockResolvedValue({ error: { code: "PT409", message: "secret" } });
     expect((await resolveReport({}, form())).error).toContain("ha cambiado");
     expect(mocks.rpc).toHaveBeenCalledTimes(1);
     expect(mocks.revalidate).not.toHaveBeenCalled();

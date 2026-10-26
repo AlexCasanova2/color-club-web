@@ -27,11 +27,11 @@ export default async function AdminReportsPage({ searchParams }: {
         <p>Revisa el contenido señalado y registra cada decisión.</p>
       </header>
       <form className="admin-card reports-filters" method="get">
-        <label>Estado<select name="status" defaultValue={filters.status}>
+        <label>Estado<select aria-label="Estado" name="status" defaultValue={filters.status}>
           <option value="all">Todos los estados</option>
           {Object.entries(reportStatuses).map(([value, label]) => <option value={value} key={value}>{label}</option>)}
         </select></label>
-        <label>Contenido<select name="subject" defaultValue={filters.subject}>
+        <label>Contenido<select aria-label="Contenido" name="subject" defaultValue={filters.subject}>
           <option value="all">Todos los tipos</option>
           {Object.entries(reportSubjects).map(([value, label]) => <option value={value} key={value}>{label}</option>)}
         </select></label>

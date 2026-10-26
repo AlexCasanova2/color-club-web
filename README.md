@@ -165,6 +165,29 @@ como éxito. La limpieza física de Storage es asíncrona, no inmediata.
 Esta unidad se puede retirar eliminando `reports/actions.ts`, `ReportResolutionForm`
 y sus pruebas/estilos, conservando la cola y la evidencia de solo lectura.
 
+### Validación local de moderación
+
+1. En `../color-club`, aplica las tres migraciones `202610260001/002/003` con
+   `supabase migration up --local` (sin resetear la demo) y ejecuta `supabase test db`.
+2. En esta web, ejecuta `npx playwright install chromium` una vez y después
+   `npx playwright test --config playwright.moderation.config.ts`.
+
+El arnés exige `http://127.0.0.1:55321`, levanta la web aislada en el puerto 3011,
+crea cuentas y contenido efímeros, y limpia solo sus propios identificadores.
+No reutiliza usuarios de la demo ni modifica producción u Oko. La clave privilegiada
+local se usa solo en el fixture de pruebas, nunca se pasa al servidor web ni al navegador.
+Los resultados y capturas de Playwright están excluidos de Git y pueden contener
+evidencia o sesiones de prueba; no deben publicarse.
+
+La integración detectó un bloqueo de REST con `40001`: la tercera migración devuelve
+`PT409` para conflictos de negocio. La web reconoce ambos códigos y exige recargar.
+
+Resultado verificado: 70 pruebas SQL, 45 unitarias web y 12 escenarios de navegador
+correctos (escritorio y móvil). Incluyen roles no autorizados/inactivos, `owner`,
+aislamiento de fotografías, filtros/paginación, confirmación, auditoría, concurrencia
+y cierre real de sesión. El detalle también se comprueba a 320 px sin desbordamiento.
+La compilación de producción local es correcta. No hay push, PR ni despliegue remoto.
+
 ## Contenido legal
 
 Las políticas públicas se mantienen en `lib/legal.ts` para que su identidad, fechas y cuerpo no dependan del CMS editorial. Los textos reflejan el funcionamiento comunicado del producto y deben revisarse profesionalmente cuando cambien los proveedores, la infraestructura, los plazos internos o las funciones de la app.

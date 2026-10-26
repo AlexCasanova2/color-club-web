@@ -27,7 +27,7 @@ export async function resolveReport(_previous: ReportActionState, form: FormData
       ? await supabase.rpc("admin_remove_reported_content", args)
       : await supabase.rpc("admin_review_report", { ...args, next_status: operation });
     if (error) {
-      if (error.code === "40001") return { error: "El caso o su contenido ha cambiado. Recarga y revisa la evidencia antes de actuar de nuevo." };
+      if (error.code === "PT409" || error.code === "40001") return { error: "El caso o su contenido ha cambiado. Recarga y revisa la evidencia antes de actuar de nuevo." };
       if (error.code === "42501") return { error: "Tu cuenta ya no tiene permiso para moderar este caso." };
       if (error.code === "22023" || error.code === "P0002") return { error: "El caso ya no admite esta acción. Recarga para comprobar su estado." };
       return { error: "No se ha podido confirmar la operación. Recarga el caso antes de repetirla." };

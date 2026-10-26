@@ -1019,3 +1019,37 @@
 .report-submit--danger { background: var(--color-danger); }
 .report-submit:disabled { cursor: wait; }
 .report-resolution [role="alert"] { color: var(--color-danger); }
+
+/* La moderación conserva la navegación en isla, también en pantallas estrechas. */
+.admin-shell:has(.reports-page, .report-detail) { display: block; padding-block-start: 1px; }
+.admin-shell:has(.reports-page, .report-detail) .admin-sidebar {
+  inset-block-start: 14px;
+  width: min(calc(100% - 28px), 1200px);
+  height: auto;
+  margin: 14px auto 0;
+  padding: 8px;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  overflow: visible;
+  border: 0;
+  border-radius: 30px;
+  box-shadow: var(--shadow-soft);
+}
+.admin-shell:has(.reports-page, .report-detail) .admin-sidebar nav { flex: 1; min-width: 0; overflow-x: auto; flex-direction: row; }
+.admin-shell:has(.reports-page, .report-detail) .admin-sidebar a { width: auto; }
+.admin-shell:has(.reports-page, .report-detail) .admin-sidebar__logout { margin: 0; flex-shrink: 0; }
+.admin-shell:has(.reports-page, .report-detail) .admin-sidebar__brand { padding: 0 8px; }
+.reports-page, .report-detail { width: min(calc(100% - 36px), 1200px); }
+.reports-page h1, .report-detail h1 { font-size: clamp(2.25rem, 5vw, 3rem); }
+.reports-page h2, .report-detail h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+.reports-page h3, .report-detail h3 { font-size: 1.2rem; }
+.report-detail .admin-page__header { margin-block-start: 1.25rem; justify-items: start; }
+.report-detail .admin-card { min-width: 0; max-width: none; width: 100%; }
+.report-detail .report-resolution { max-width: 760px; }
+@media (max-width: 639px) {
+  .admin-shell:has(.reports-page, .report-detail) .admin-sidebar__brand { padding: 0; }
+  .admin-shell:has(.reports-page, .report-detail) .admin-sidebar__brand div { display: none; }
+  .admin-shell:has(.reports-page, .report-detail) .admin-sidebar a { padding-inline: 8px; font-size: .875rem; }
+  .admin-shell:has(.reports-page, .report-detail) .admin-sidebar__logout button { padding-inline: 8px; }
+}

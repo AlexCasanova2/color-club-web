@@ -21,7 +21,7 @@ export function ReportResolutionForm({ id, revision, subject }: { id: string; re
         <input type="hidden" name="report_id" value={id} />
         <input type="hidden" name="revision" value={revision} />
         <fieldset disabled={pending}>
-          <label>Acción<select name="operation" value={operation} onChange={(event) => setOperation(event.target.value)}>
+          <label>Acción<select aria-label="Acción" name="operation" value={operation} onChange={(event) => setOperation(event.target.value)}>
             <option value="reviewing">Marcar en revisión</option>
             <option value="dismissed">Descartar la denuncia</option>
             <option value="remove">Retirar el contenido denunciado</option>
