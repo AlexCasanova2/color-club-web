@@ -997,3 +997,12 @@
 .report-status--actioned { background: var(--color-green); }
 .reports-pagination { margin-block: 1.5rem; }
 .reports-pagination a { padding: .75rem; text-decoration: underline; }
+.report-detail-grid { display: grid; gap: 1rem; margin-block: 1.5rem; }
+.report-detail dl { display: grid; gap: 1rem; }
+.report-detail dt { font-size: .8rem; color: var(--color-muted); font-weight: 700; }
+.report-detail dd { margin: .25rem 0 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+.report-detail blockquote { margin: 1.5rem 0; padding: 1.25rem; border-radius: 18px; background: var(--color-paper); white-space: pre-wrap; overflow-wrap: anywhere; }
+.report-photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+.report-photo-grid img { width: 100%; aspect-ratio: 1; object-fit: contain; border-radius: 18px; background: var(--color-paper); }
+.report-image-missing { padding: 1rem; border: 1px solid var(--color-line); border-radius: 18px; }
+@media (min-width: 1024px) { .report-detail-grid { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); align-items: start; } }

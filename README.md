@@ -144,6 +144,14 @@ sus pruebas y estilos de cola, sin cambios de datos. El detalle se entrega despu
 Verificación: TypeScript correcto y 28 pruebas unitarias correctas. El recorrido
 HTTP con datos locales se comprueba al integrar el detalle y las acciones.
 
+El detalle muestra el snapshot como texto escapado, no HTML, y firma solo fotos
+del participante denunciado durante 60 segundos usando la sesión y RLS. Los casos
+cerrados no solicitan URLs. Las fotos que faltan o caducan tienen un estado explícito.
+Los avatares públicos se cargan únicamente si la URL pertenece al almacenamiento
+configurado y a la carpeta del usuario denunciado; no se cargan URLs arbitrarias.
+Esta entrega se revierte retirando la
+ruta `[id]`, `lib/moderation-detail.ts`, `ReportEvidenceImage` y sus pruebas/estilos.
+
 ## Contenido legal
 
 Las políticas públicas se mantienen en `lib/legal.ts` para que su identidad, fechas y cuerpo no dependan del CMS editorial. Los textos reflejan el funcionamiento comunicado del producto y deben revisarse profesionalmente cuando cambien los proveedores, la infraestructura, los plazos internos o las funciones de la app.
