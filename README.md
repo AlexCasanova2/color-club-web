@@ -133,6 +133,17 @@ cierre local de sesión; el recorrido con Auth real se valida con la bandeja loc
 La unidad de acceso se puede retirar eliminando `lib/admin-access.ts`, `proxy.ts`
 y sus pruebas y revirtiendo el ajuste de navegación. No modifica datos del producto.
 
+### Cola de denuncias
+
+`/internal-admin/reports` exige `moderator` u `owner` activo en cada petición.
+Muestra casos abiertos por defecto, permite filtrar por estado/tipo y pagina de
+20 en 20. La consulta usa la sesión normal y conserva RLS; no carga fotos ni
+snapshots en el listado. Los errores de consulta no se presentan como cero casos.
+La retirada de esta unidad se limita a la página de listado, `lib/moderation.ts`,
+sus pruebas y estilos de cola, sin cambios de datos. El detalle se entrega después.
+Verificación: TypeScript correcto y 28 pruebas unitarias correctas. El recorrido
+HTTP con datos locales se comprueba al integrar el detalle y las acciones.
+
 ## Contenido legal
 
 Las políticas públicas se mantienen en `lib/legal.ts` para que su identidad, fechas y cuerpo no dependan del CMS editorial. Los textos reflejan el funcionamiento comunicado del producto y deben revisarse profesionalmente cuando cambien los proveedores, la infraestructura, los plazos internos o las funciones de la app.
