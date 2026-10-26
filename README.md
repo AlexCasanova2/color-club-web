@@ -188,6 +188,23 @@ aislamiento de fotografías, filtros/paginación, confirmación, auditoría, con
 y cierre real de sesión. El detalle también se comprueba a 320 px sin desbordamiento.
 La compilación de producción local es correcta. No hay push, PR ni despliegue remoto.
 
+### Primera entrada con invitación
+
+La invitación de Supabase vuelve al `site_url` ya autorizado. La portada reconoce
+solo el fragmento `type=invite` y lo traslada a `/internal-admin/accept-invite` sin
+enviar tokens al servidor. El formulario retira el fragmento del historial, establece
+la sesión explícitamente y verifica usuario y rol antes de permitir elegir contraseña.
+`@supabase/ssr` fuerza PKCE; para este retorno implícito se desactiva su detección
+automática y se usa `setSession`, conservando el almacenamiento SSR de cookies.
+
+El usuario guarda personalmente una contraseña de al menos ocho caracteres y entra
+al panel. No se crean contraseñas provisionales ni se envían credenciales al chat.
+Las invitaciones caducadas o cuentas sin rol activo no muestran el formulario.
+La unidad se puede retirar eliminando los dos componentes `AdminInvite*`, la ruta
+`accept-invite`, su inclusión en portada y las pruebas de invitación. El login habitual
+se mantiene sin cambios. Pruebas: 48 unitarias y recorrido local de invitación,
+elección de contraseña, cierre y nuevo login en escritorio y móvil.
+
 ## Contenido legal
 
 Las políticas públicas se mantienen en `lib/legal.ts` para que su identidad, fechas y cuerpo no dependan del CMS editorial. Los textos reflejan el funcionamiento comunicado del producto y deben revisarse profesionalmente cuando cambien los proveedores, la infraestructura, los plazos internos o las funciones de la app.

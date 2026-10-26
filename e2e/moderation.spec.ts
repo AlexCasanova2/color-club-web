@@ -183,3 +183,29 @@ test("owner accede a moderación y la paginación mantiene filtros", async ({ pa
   await page.getByRole("link", { name: "← Anterior" }).click();
   await expect(page).toHaveURL(/page=1/);
 });
+
+test("la invitación vuelve desde la portada y permite elegir contraseña", async ({ page }) => {
+  const email = `moderation-invite-${randomUUID()}@example.test`;
+  const { data } = check(await admin.auth.admin.generateLink({ type: "invite", email, options: { data: { display_name: "Moderador invitado" } } }));
+  accounts.push({ id: data.user.id, email });
+  check(await admin.from("platform_admins").insert({ user_id: data.user.id, role: "moderator" }));
+  const client = createClient(local.API_URL, local.ANON_KEY, { auth: { persistSession: false } });
+  const { data: verified } = check(await client.auth.verifyOtp({ token_hash: data.properties.hashed_token, type: "invite" }));
+  const session = verified.session!;
+  // Simula el fragmento del retorno de Supabase con una sesión exclusivamente local.
+  const hash = new URLSearchParams({ type: "invite", access_token: session.access_token, refresh_token: session.refresh_token, expires_in: "3600", token_type: "bearer" });
+  await page.goto(`/#${hash}`);
+  await expect(page).toHaveURL(/\/internal-admin\/accept-invite$/);
+  await expect(page.getByLabel("Nueva contraseña")).toBeVisible();
+  const newPassword = randomUUID();
+  await page.getByLabel("Nueva contraseña").fill(newPassword);
+  await page.getByLabel("Repite la contraseña").fill(newPassword);
+  await page.getByRole("button", { name: "Guardar y entrar" }).click();
+  await expect(page).toHaveURL(/\/reports$/);
+  await page.getByRole("button", { name: "Salir" }).click();
+  await expect(page).toHaveURL(/\/login$/);
+  await page.getByLabel("Email").fill(email);
+  await page.getByLabel("Contraseña").fill(newPassword);
+  await page.getByRole("button", { name: "Entrar" }).click();
+  await expect(page).toHaveURL(/\/reports$/);
+});

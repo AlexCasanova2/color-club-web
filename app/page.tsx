@@ -8,6 +8,7 @@ import {
   IoTimeOutline,
 } from "react-icons/io5";
 import { AnimatedWorkflow } from "@/components/AnimatedWorkflow";
+import { AdminInviteRedirect } from "@/components/admin/AdminInviteRedirect";
 import { DownloadCta, LearnMoreLink } from "@/components/DownloadCta";
 import { JsonLd } from "@/components/JsonLd";
 import { HeroCollage } from "@/components/ProductVisuals";
@@ -46,6 +47,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <AdminInviteRedirect />
       <JsonLd
         data={[
           breadcrumbJsonLd("/"),
