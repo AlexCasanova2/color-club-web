@@ -4,6 +4,7 @@ import { requireModerator } from "@/lib/admin-access";
 import { formatReportDate, reportReasons, reportStatuses, reportSubjects } from "@/lib/moderation";
 import { getReport, getReportImages, isReportOpen, snapshotText } from "@/lib/moderation-detail";
 import { ReportEvidenceImage } from "@/components/admin/ReportEvidenceImage";
+import { ReportResolutionForm } from "@/components/admin/ReportResolutionForm";
 
 export const dynamic = "force-dynamic";
 
@@ -57,6 +58,9 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
           {report.status === "actioned" && <p>{report.content_removed_at ? "Contenido retirado de la aplicación. La limpieza de archivos se procesa por separado." : "Caso atendido; el contenido ya no estaba disponible al actuar."}</p>}
         </aside>
       </div>
+      {isReportOpen(report)
+        ? <ReportResolutionForm id={report.id} revision={report.revision} subject={report.subject_type} />
+        : <div className="admin-card" role="status"><h2>Caso cerrado</h2><p>La resolución está registrada. No se admiten nuevas actuaciones sobre esta denuncia.</p></div>}
     </section>
   );
 }

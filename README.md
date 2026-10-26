@@ -152,6 +152,19 @@ configurado y a la carpeta del usuario denunciado; no se cargan URLs arbitrarias
 Esta entrega se revierte retirando la
 ruta `[id]`, `lib/moderation-detail.ts`, `ReportEvidenceImage` y sus pruebas/estilos.
 
+### Decisiones y retirada
+
+El formulario permite pasar a revisión, descartar o retirar el contenido denunciado.
+Todas las acciones vuelven a validar sesión/rol y exigen motivo y revisión esperada.
+La retirada requiere una confirmación explícita y muestra sus efectos antes de enviar;
+el servidor también exige esa confirmación. No elimina ni suspende cuentas.
+La base de datos comprueba snapshot, concurrencia y auditoría. Un conflicto exige
+recargar; un resultado incierto nunca se reintenta automáticamente ni se anuncia
+como éxito. La limpieza física de Storage es asíncrona, no inmediata.
+
+Esta unidad se puede retirar eliminando `reports/actions.ts`, `ReportResolutionForm`
+y sus pruebas/estilos, conservando la cola y la evidencia de solo lectura.
+
 ## Contenido legal
 
 Las políticas públicas se mantienen en `lib/legal.ts` para que su identidad, fechas y cuerpo no dependan del CMS editorial. Los textos reflejan el funcionamiento comunicado del producto y deben revisarse profesionalmente cuando cambien los proveedores, la infraestructura, los plazos internos o las funciones de la app.
